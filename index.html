@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+    <meta name="keywords" content="Implicit Representation, Reconstruction, Occupancy, SDF">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hybrid Occ-SDF</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-PYVRSFMDRL');
+    </script>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="icon" href="./static/images/hku.png">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+    <script src="./static/js/video_comparison.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+                <a class="navbar-item" href="https://keunhong.com">
+                    <span class="icon">
+                        <i class="fas fa-home"></i>
+                    </span>
+                </a>
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        More Research
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="https://latentfusion.github.io">
+                            Hybrid Occ-SDF
+                        </a>
+                        <a class="navbar-item" href="https://github.com/kyleleey/RICO">
+                            RICO
+                        </a>
+                        <a class="navbar-item" href="https://daipengwa.github.io/Hybrid-Rendering-ProjectPage/">
+                            Hybrid Rendering
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <h1 class="title is-1 publication-title">Learning A Room with the Occ-SDF Hybrid: Signed
+                            Distance Function Mingled with Occupancy Aids Scene Representation</h1>
+                        <div class="column has-text-centered">
+                            <h1 class="subtitle has-text-centered">
+                                <b>
+                                    International Conference on Computer Vision (ICCV), 2023
+                                </b>
+                            </h1>
+                        </div>
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block">
+                                <a href="http://shawlyu.github.io/">Xiaoyang Lyu</a><sup>1</sup>
+                                <span class="author-block">
+                                    <a href="https://daipengwa.github.io/">Peng Dai</a><sup>1</sup>
+                                    <span class="author-block">
+                                        <a href="https://kyleleey.github.io/">Zizhang Li</a><sup>2</sup>
+                                    </span>
+                                    <span class="author-block">
+                                        <a href="http://starydy.xyz/about/">Dongyu Yan</a><sup>3</sup>
+                                    </span>
+                                    <span class="author-block">
+                                        <a href="https://scholar.google.com.hk/citations?user=29otYD8AAAAJ&hl=en">Yi
+                                            Lin</a><sup>4</sup>
+                                    </span>
+                                    <span class="author-block">
+                                        <a href="https://www.eee.hku.hk/~evanpeng/">Yifan Peng</a><sup>1</sup>
+                                    </span>
+                                    <span class="author-block">
+                                        <a href="https://xjqi.github.io/">Xiaojuan Qi</a><sup>1</sup>
+                                    </span>
+                        </div>
+
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block"><sup>1</sup>The University of Hong Kong,</span>
+                            <span class="author-block"><sup>2</sup>Zhejiang University,</span>
+                            <span class="author-block"><sup>3</sup>Harbin Institute of Technology,</span>
+                            <span class="author-block"><sup>4</sup>DJI</span>
+                        </div>
+
+                        <div class="column has-text-centered">
+                            <div class="publication-links">
+                                <!-- PDF Link. -->
+                                <span class="link-block">
+                                    <a href="https://arxiv.org/pdf/2303.09152.pdf"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </span>
+                                        <span>Paper</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="https://arxiv.org/pdf/2303.09152.pdf"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="ai ai-arxiv"></i>
+                                        </span>
+                                        <span>arXiv</span>
+                                    </a>
+                                </span>
+                                <!-- Video Link. -->
+                                <!-- <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+                                <!-- Code Link. -->
+                                <span class="link-block">
+                                    <a href="https://github.com/shawLyu/Occ-SDF-Hybrid"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fab fa-github"></i>
+                                        </span>
+                                        <span>Code(Coming Soon)</span>
+                                    </a>
+                                </span>
+                                <!-- Dataset Link. -->
+                                <!-- <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a> -->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero teaser">
+        <div class="container is-max-desktop">
+            <div class="hero-body">
+                <video id="teaser" autoplay muted loop playsinline height="100%">
+                    <source src="./static/videos/teaser.mp4" type="video/mp4">
+                </video>
+                <h2 class="subtitle has-text-centered">
+                    <span class="dnerf">Occ-SDF-Hybrid</span> can reconstruct more detailed structures with pseudo
+                    geometry constraints.
+                </h2>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- <section class="hero is-light is-small"> -->
+    <!-- <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/steve.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/chair-tp.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/shiba.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/fullbody.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-blueshirt">
+          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/blueshirt.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-mask">
+          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/mask.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-coffee">
+          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/coffee.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-toby">
+          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/toby2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div> -->
+    <!-- </section> -->
+
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <!-- Abstract. -->
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                            Implicit neural rendering, using signed distance function (SDF) representation with
+                            geometric priors like depth
+                            or surface normal, has made impressive strides in the surface reconstruction of large-scale
+                            scenes. However,
+                            applying this method to reconstruct a room-level scene from images may miss structures in
+                            low-intensity areas
+                            and/or small, thin objects. We have conducted experiments on three datasets to identify
+                            limitations of the
+                            original color rendering loss and priors-embedded SDF scene representation.
+                        </p>
+                        <p>
+                            Our findings show that the color rendering loss creates an optimization bias against
+                            low-intensity areas, resulting in gradient vanishing and leaving these areas unoptimized.
+                            To address this issue, we propose a feature-based color rendering loss that utilizes
+                            non-zero
+                            feature values to bring back optimization signals. Additionally, the SDF
+                            representation can be influenced by objects along a ray path,
+                            disrupting the monotonic change of SDF values when a single object is present.
+                            Accordingly, we explore using the occupancy representation, which encodes each point
+                            separately and is unaffected by objects along a querying ray. Our experimental results
+                            demonstrate that the joint forces of the feature-based rendering loss and Occ-SDF
+                            hybrid representation scheme can provide high-quality reconstruction results,
+                            especially in challenging room-level scenarios.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--/ Abstract. -->
+
+            <!-- Paper video. -->
+            <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+            <!--/ Paper video. -->
+        </div>
+    </section>
+
+
+    <section class="section">
+        <div class="container is-max-desktop">
+
+            <!-- <div class="columns is-centered"> -->
+
+            <!-- Visual Effects. -->
+            <!-- <div class="column">
+        <div class="content">
+          <h2 class="title is-3">Visual Effects</h2>
+          <p>
+            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
+            would be impossible without nerfies since it would require going through a wall.
+          </p>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/dollyzoom-stacked.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div> -->
+            <!--/ Visual Effects. -->
+
+            <!-- Matting. -->
+            <!-- <div class="column">
+        <h2 class="title is-3">Matting</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <p>
+              As a byproduct of our method, we can also solve the matting problem by ignoring
+              samples that fall outside of a bounding box during rendering.
+            </p>
+            <video id="matting-video" controls playsinline height="100%">
+              <source src="./static/videos/matting.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+
+        </div>
+      </div> -->
+            <!-- </div> -->
+            <!--/ Matting. -->
+
+            <!-- Animation. -->
+            <div class="columns is-centered">
+                <div class="column is-full-width">
+                    <div class="columns is-centered has-text-centered">
+                        <h2 class="title is-3">Method</h2>
+                    </div>
+
+                    <!-- Feature Rendering. -->
+                    <h3 class="title is-4">Feature Rendering</h3>
+                    <div class="content has-text-justified">
+                        <p>
+                            We find that the well-adopted color-based rendering formula in MonoSDF and NeuRIS will
+                            induce optimization bias against low-intensity areas,
+                            leaving these areas under-optimized and resulting in missing reconstructions.
+                            Accordingly, we propose a simple yet effective feature-based rendering formula to address
+                            the problem.
+                            More details can be found in the main paper.
+                        </p>
+                    </div>
+                    <div class="columns is-centered">
+                        <div class="content has-text-centered">
+                            <img src="./static/images/net_structure.png" width="90%" />
+                            <p>Network Structure.</p>
+                        </div>
+                        <div class="content has-text-centered">
+                            <img src="./static/images/gradient_transform.png" width="95%" />
+                            <p class="is-bold">The trend for the gradient during optimization.</p>
+                        </div>
+                    </div>
+                    <br />
+                    <!--/ Feature Rendering. -->
+
+                    <!-- Occ-SDF Hybrid. -->
+                    <h3 class="title is-4">Occ-SDF Hybrid Representation</h3>
+                    <div class="content has-text-justified">
+                        <p>
+                            The left part of <font color='red'>(a)</font>, where we stand in front of the yellow
+                            cylinder to observe the entire scene,
+                            is a widespread scenario for room-level scale scenes.
+                            Unlike the single object scenario, where the distribution of SDF value is a monotonic
+                            decreasing function
+                            from the observed position to the object, the room-level scenario has complex distributions
+                            with multi
+                            peaks/valleys along the single ray <font color='red'>(c)</font>.
+                            Following the Laplace density function, the density distributions of different situations
+                            are shown
+                            in <font color='red'>(d)</font>, where room-level scenes have a secondary peak near small
+                            objects
+                            but the single object scene only has one peak.
+                            It is because of the existence of this peak, the weights in the room-level
+                            scene <font color='red'>(e)</font> exhibit a multi-model distribution, while for the single
+                            object case
+                            a uni-modal distribution. As such, we note that the rendering depth D&#770
+                            deviates from the ground truth in the room-level scene but is close to the ground truth
+                            depth
+                            object-level scene. <font color='red'>(b)</font> means the effect of supervised signal in
+                            three different representations.
+                            More details can be found in the main paper.
+                        </p>
+                    </div>
+                    <div class="content has-text-centered">
+                        <img src="./static/images/SDF_Explain.png" />
+                        </video>
+                    </div>
+                    <!--/ Re-rendering. -->
+
+                </div>
+            </div>
+            <!--/ Animation. -->
+
+            <div class="hero-body">
+                <div class="columns is-centered has-text-centered">
+                    <h2 class="title is-3">Results</h2>
+                </div>
+                <div class="container">
+                    <div id="results-carousel" class="carousel results-carousel">
+                        <div class="item item-toby">
+                            <div class="video-compare-container">
+                                <h3 class="title is-6 has-text-centered"> 
+                                    Ballroom
+                                </h3>
+                                <video class="video" id="mesh1" loop="" autoplay="" muted="" src="./static/videos/ballroom_demo.webm"
+                                    onplay="resizeAndPlay(this)" style="height: 0px;">
+                                </video>
+                                <canvas class="videoMerge" id="mesh1Merge"></canvas>
+                            </div>
+                        </div>
+                        <div class="item item-toby">
+                            <div class="video-compare-container">
+                                <h3 class="title is-6 has-text-centered"> 
+                                    Museum
+                                </h3>
+                                <video class="video" id="mesh2" loop="" autoplay="" muted="" src="./static/videos/museum_demo.mp4"
+                                    onplay="resizeAndPlay(this)" style="height: 0px;">
+                                </video>
+                                <canvas class="videoMerge" id="mesh2Merge"></canvas>
+                            </div>
+                        </div>
+                        <div class="item item-toby">
+                            <div class="video-compare-container">
+                                <h3 class="title is-6 has-text-centered"> 
+                                    Scene 0050
+                                </h3>
+                                <video class="video" id="mesh3" loop="" autoplay="" muted="" src="./static/videos/scannet_1_demo.mp4"
+                                    onplay="resizeAndPlay(this)" style="height: 0px;">
+                                </video>
+                                <canvas class="videoMerge" id="mesh3Merge"></canvas>
+                            </div>
+                        </div>
+                        <div class="item item-toby">
+                            <div class="video-compare-container">
+                                <h3 class="title is-6 has-text-centered"> 
+                                    Scene 0084
+                                </h3>
+                                <video class="video" id="mesh4" loop="" autoplay="" muted="" src="./static/videos/scannet_2_demo.mp4"
+                                    onplay="resizeAndPlay(this)" style="height: 0px;">
+                                </video>
+                                <canvas class="videoMerge" id="mesh4Merge"></canvas>
+                            </div>
+                        </div>
+                        <div class="item item-toby">
+                            <div class="video-compare-container">
+                                <h3 class="title is-6 has-text-centered"> 
+                                    Scene 0580
+                                </h3>
+                                <video class="video" id="mesh5" loop="" autoplay="" muted="" src="./static/videos/scannet_3_demo.mp4"
+                                    onplay="resizeAndPlay(this)" style="height: 0px;">
+                                </video>
+                                <canvas class="videoMerge" id="mesh5Merge"></canvas>
+                            </div>
+                        </div>
+                        <div class="item item-toby">
+                            <div class="video-compare-container">
+                                <h3 class="title is-6 has-text-centered"> 
+                                    Scene 0616
+                                </h3>
+                                <video class="video" id="mesh6" loop="" autoplay="" muted="" src="./static/videos/scannet_4_demo.mp4"
+                                    onplay="resizeAndPlay(this)" style="height: 0px;">
+                                </video>
+                                <canvas class="videoMerge" id="mesh6Merge"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Concurrent Work. -->
+            <div class="columns is-centered">
+                <div class="column is-full-width">
+                    <div class="columns is-centered has-text-centered">
+                        <h2 class="title is-3">Related Links</h2>
+                    </div>
+
+                    <div class="content has-text-justified">
+                        <p>
+                            There's a lot of excellent work trying to generate better reconstruction
+                            results.
+                        </p>
+                        <p>You can also check them.</p>
+                        <p>
+                            <a href="https://arxiv.org/abs/2104.09125">Coordinate Quantized Neural Implicit
+                                Representations for Multi-view
+                                Reconstruction</a>.
+                        </p>
+                        <p>
+                            <a href="https://jingsenzhu.github.io/i2-sdf/">I<sup>2</sup>-SDF: ntrinsic
+                                Indoor Scene Reconstruction and Editing via Raytracing in Neural SDFs</a>
+                        </p>
+                        <p>
+                            <a href="https://github.com/Gorilla-Lab-SCUT/HelixSurf">HelixSurf: A Robust and 
+                                Efficient Neural Implicit Surface Learning of Indoor Scenes with Iterative 
+                                Intertwined Regularization</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--/ Concurrent Work. -->
+
+        </div>
+    </section>
+
+
+    <section class="section" id="BibTeX">
+        <div class="container is-max-desktop content">
+            <h2 class="title">BibTeX</h2>
+            <pre><code> @inproceedings{Lyu2023occsdf,
+    title={Learning A Room with the Occ-SDF Hybrid: Signed Distance Function Mingled with Occupancy Aids Scene Representation},
+    author={Xiaoyang Lyu, Peng Dai, Zizhang Li, Dongyu Yan, Yi Lin, Yifan Peng, Xiaojuan Qi},
+    booktitle={Proceedings of the IEEE/CVF international conference on computer vision},
+    year={2023}
+    }
+</code></pre>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <a class="icon-link" href="./static/paper/Hybrid_SDF_Occ.pdf">
+                    <i class="fas fa-file-pdf"></i>
+                </a>
+                <a class="icon-link" href="https://github.com/shawLyu" class="external-link" disabled>
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+                        <p>
+                            This website is licensed under a <a rel="license"
+                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                                Commons Attribution-ShareAlike 4.0 International License</a>.
+                        </p>
+                        <p>
+                            This template is borrowed from<a
+                                href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+                            Thanks for their sharing.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
