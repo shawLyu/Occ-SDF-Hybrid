@@ -72,16 +72,16 @@ where CONFIG is the config file in code/confs, and SCAN_ID is the id of the scen
 We provide example commands for training Replica, ScanNet, and Tanks and Temples dataset as follows:
 ```
 # Replica (room0)
-CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --master_port 25585 --nproc_per_node 1 --nnodes=1 --node_rank=0 training/exp_runner.py --conf confs/replica_mlp_hybrid.conf --scan_id 0
+CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --master_port 25585 --nproc_per_node 1 --nnodes=1 --node_rank=0 training/exp_runner.py --conf confs/replica_mlp_hybrid.conf --scan_id 1
 
 # Scannet (scene_0050_00)
-CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --master_port 25585 --nproc_per_node 1 --nnodes=1 --node_rank=0 training/exp_runner.py --conf confs/scannet_mlp_hybrid.conf --scan_id 0
+CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --master_port 25585 --nproc_per_node 1 --nnodes=1 --node_rank=0 training/exp_runner.py --conf confs/scannet_mlp_hybrid.conf --scan_id 1
 
 # Tanks and Temples (MLP)
-CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --master_port 25585 --nproc_per_node 1 --nnodes=1 --node_rank=0 training/exp_runner.py --conf confs/tnt_mlp_hybrid.conf --scan_id 0
+CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --master_port 25585 --nproc_per_node 1 --nnodes=1 --node_rank=0 training/exp_runner.py --conf confs/tnt_mlp_hybrid.conf --scan_id 1
 
 # Tanks and Temples (Grids)
-CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --master_port 25585 --nproc_per_node 1 --nnodes=1 --node_rank=0 training/exp_runner.py --conf confs/tnt_grids_hybrid.conf --scan_id 0
+CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --master_port 25585 --nproc_per_node 1 --nnodes=1 --node_rank=0 training/exp_runner.py --conf confs/tnt_grids_hybrid.conf --scan_id 1
 ```
 
 # Evaluations
