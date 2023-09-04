@@ -17,7 +17,7 @@
     <a href="https://xjqi.github.io/">Xiaojuan Qi</a> 
   </p>
   <h3 align="center">ICCV 2023</h3>
-  <h3 align="center"><a href="https://arxiv.org/pdf/2303.09152">Paper</a> | <a href="">Project Page</a></h3>
+  <h3 align="center"><a href="https://arxiv.org/pdf/2303.09152">Paper</a> | <a href="https://shawlyu.github.io/Occ-SDF-Hybrid/">Project Page</a></h3>
   <div align="center"></div>
 </p>
 
@@ -36,7 +36,7 @@ We have conducted experimetns on three datasets to identify limitations of the o
 # TODO
 - [x] Create the project page
 - [x] Create the README file
-- [ ] Opensource all the training code
+- [x] Opensource all the training code
 - [ ] Opensource all the models and meshes
 - [ ] Replica data preparation scripts
 - [ ] Real data preparation scripts
@@ -93,7 +93,6 @@ python evaluate_single_scene.py --input_mesh replica_scan1_mesh.ply --scan_id 1 
 ```
 Evaluate all Replica Scenes: 
 
-TODO: Check here
 ```
 cd replica_eval
 python evaluate_avg.py
