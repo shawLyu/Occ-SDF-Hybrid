@@ -12,7 +12,7 @@
     ·
     <a href="https://scholar.google.com.hk/citations?user=29otYD8AAAAJ&hl=en">Yi Lin</a> 
     ·
-    <a href="https://www.eee.hku.hk/~evanpeng/">Yifan Peng</a> 
+    <a href="https://www.eee.hku.hk/~evanpeng/">Yifan (Evan) Peng</a> 
     ·
     <a href="https://xjqi.github.io/">Xiaojuan Qi</a> 
   </p>
